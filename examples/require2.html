@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>USING WITH REQUIRE</title>
+
+    <script type="text/javascript" src="./deps/require.js"></script>
+
+</head>
+<body>
+<div id='meter'></div>
+<script type="text/javascript">
+    //minimal example using requirejs
+//    require.config({
+//        baseUrl : "../"
+//    });
+    require(["../build/Tone"],
+            function(Tone){
+
+                var meter = new Tone.Meter();
+
+                var osc = new Tone.Oscillator(0.5);
+                var scale = new Tone.Scale(-1, 1, 10, 100);
+
+                osc.connect(scale);
+                scale.connect(meter);
+
+                osc.start();
+
+                var meterEl = document.querySelector("#meter");
+
+                setInterval(function(){
+                    meterEl.textContent = meter.getValue().toFixed(2);
+                }, 100);
+            });
+
+</script>
+</body>
+</html>
